@@ -29,15 +29,15 @@ export default function MintingNFT() {
     context.fillRect(0, 0, context.canvas.width, context.canvas.height)
     context.fillStyle = '#fff'
     context.fillText(`Cordinates are ${x} ,${y}, ${z}`, 80, 50)
+    console.log(context,"context");
     download()
     let ab = x + y + z
     console.log('avcbcbc', ab)
-    // let data =  Object()
-    // data.filename = ab
+    
     axios.post(`http://localhost:3001/api/ipfs`, {ab})
     .then(res => {
-      console.log(res);
-      console.log(res.data);
+     
+      console.log("From IPFS",res.data);
     })
 
     
@@ -67,41 +67,10 @@ export default function MintingNFT() {
       async function setXY() {
         let xy = await contracts.setxy(`${c.x}`, `${c.y}`)
       }
-      //  contracts.setxy('23','45');
+      
       setXY()
-      Init()
-     
-      
-
-
-
-
-
-
-
-      
-    //  const {create}= require("ipfs-http-client");
-    //  async function ccc(){
-    //    console.log('hii from ccc');
-    //  const ipfss= await create(
-    //    {host:"localhost",
-    //   port:5001,
-    //   protocol:"http"
-    // }
-    //  );
-    //  return ipfss;
-    //  }   
-     
-    //  const run = async () => {
-    //   console.log('hii from run');
-
-    //   const ipfs= await ccc();
-    //   const result = await ipfs.add("nft.png")
-    // console.log(result);
-    //   return result
-    // } 
-    // run()
-    // return run 
+      Init()     
+    
       let dxy = await contracts.getxy()
       console.log(dxy, 'dxy')
       console.log('Contract', contracts)
@@ -110,7 +79,6 @@ export default function MintingNFT() {
       console.log('web1.eth.getAccounts', dc[0])
 
       let mint = await contracts.mint(`${dc[0]}`, 1)
-      // console.log("Mint",mint);
       setHash(mint.hash)
     } catch (error) {
       console.log('error ----', error)
@@ -121,18 +89,7 @@ export default function MintingNFT() {
     if (window.ethereum && window.ethereum.isMetaMask) {
       console.log('MetaMask Here!')
 
-      //  var c= fromLatLngToPoint(x,y);
-
-      // async function setXY() {
-
-      //   let xy = await contracts.setxy(`${c.x}`,`${c.y}`)
-      //  }
-      // // contracts.setxy('23','45');
-      //     setXY()
-
-      //   Init()
-      //  DynamicImagegenerate(x,y);
-      window.ethereum
+        window.ethereum
         .request({ method: 'eth_requestAccounts' })
         .then((result) => {
           accountChangedHandler(result[0])
@@ -161,7 +118,7 @@ export default function MintingNFT() {
       })
       .catch((error) => {
         setErrorMessage(error.message)
-      })
+      }) 
   }
   const chainChangedHandler = () => {
     // reload the page to avoid any errors with chain change mid use of application
@@ -175,67 +132,7 @@ export default function MintingNFT() {
   } catch (error) {
     console.log(error)
   }
-
-  // const pinFileToIPFS = async (ab) => {
-  //   console.log('pinfiletoiofs', ab)
-  //   const pinataApiKey = '3376504838af439b7353'
-  //   const pinataSecretApiKey =
-  //     '81f80eb74e31b729e3c5b467dbfd5aa85af5343a0c137830ac543fa08e1fb921'
-
-
-
-      
-    // const NFTMetadata = {
-
-    //     "name": "Rimulation",
-    //     "description": "description",
-    //     "image": `https://gateway.pinata.cloud/ipfs/QmSdeYRjL4n1qdqwQzgb8j8MKHwK4XY3HfbJQn68W9F8Zu`,
-    //     "external_link": "test.com",
-    //     // "attributes": value
-    // };
-    // const metadata = JSON.stringify(NFTMetadata);
-
-    //   fs.writeFile(`meta.json`, metadata, (err) => {
-    //     if (err) {
-    //         throw err;
-    //     }
-    // });
-
-
-
-    // const ur = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-    // const data = new FormData()
-    // data.append('file',"logo.png")
-    // return axios
-    //     .post(ur, data,{
-    //         headers: {
-    //             pinata_api_key: pinataApiKey,
-    //             pinata_secret_api_key: pinataSecretApiKey
-    //         }
-    //     })
-        
-    //     .then(function (response) {
-    //         //handle your response here
-    //     })
-    //     .catch(function (error) {
-    //         //handle error here
-    //     });
-
-  //   const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`
-  //   let data = new FormData()
-  //  data.append('file',"logo.png")
-  //   console.log("file",data)
-  //   const res = await axios.post(url, data, {
-  //     maxContentLength: 'Infinity',
-  //     headers: {
-  //       'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-  //       pinata_api_key: pinataApiKey,
-  //       pinata_secret_api_key: pinataSecretApiKey,
-  //     },
-  //   })
-  //   console.log(res.data)
-  //}
-
+ 
   return (
     <div>
       <canvas id="canvas" ref={canvasRef}></canvas>
